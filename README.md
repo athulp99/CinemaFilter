@@ -1,40 +1,88 @@
 # CinemaFilter
 
-CinemaFilter is a small starter project for exploring movie discovery and filtering ideas.
+CinemaFilter is an early-stage project for collecting cinema listings from the web and turning them into structured movie showtime data.
 
-## What is included
+The first target is `Odeon`, but the codebase is now arranged so we can add more cinema chains later without rewriting the whole app.
 
-- A simple static homepage
-- Lightweight styling
-- A tiny JavaScript entry point
-- A clean structure that is easy to publish to GitHub
+## Current focus
+
+This branch sets up the project structure for:
+
+- cinema-specific scraping modules
+- GPT-assisted extraction helpers
+- shared normalization utilities
+- a small orchestration layer that can later become an API or scheduled job
 
 ## Project structure
 
 ```text
 CinemaFilter/
-├── index.html
-├── styles.css
-├── script.js
+├── docs/
+│   └── architecture.md
+├── src/
+│   ├── cinemas/
+│   │   └── odeon/
+│   │       ├── extractShowtimes.js
+│   │       └── fetchListings.js
+│   ├── config/
+│   │   └── env.js
+│   ├── core/
+│   │   └── scrapeCinemaListings.js
+│   ├── services/
+│   │   └── openai/
+│   │       └── buildExtractionPrompt.js
+│   ├── shared/
+│   │   └── normalizeMovie.js
+│   └── index.js
+├── .env.example
 ├── .gitignore
+├── package.json
 └── README.md
 ```
 
+## How the flow works
+
+1. `src/index.js` starts a scrape run.
+2. `src/core/scrapeCinemaListings.js` chooses the cinema adapter.
+3. `src/cinemas/odeon/fetchListings.js` is where raw page fetching will live.
+4. `src/cinemas/odeon/extractShowtimes.js` converts raw content into structured showtime entries.
+5. `src/services/openai/buildExtractionPrompt.js` prepares the prompt shape for GPT-based extraction when needed.
+6. `src/shared/normalizeMovie.js` keeps movie titles consistent across sources.
+
 ## Run locally
 
-Because this first step is dependency-free, you can open `index.html` directly in a browser.
-
-If you want a local server instead, from this folder you can run:
+Install dependencies:
 
 ```bash
-python3 -m http.server 8000
+npm install
 ```
 
-Then visit `http://localhost:8000`.
+Run the starter flow:
 
-## Next ideas
+```bash
+npm start
+```
 
-- Add a movie dataset or API integration
-- Build filter controls for genre, year, and rating
-- Move to React or another frontend framework when you are ready
+## Environment
+
+Copy `.env.example` to `.env` when you are ready to add real credentials.
+
+## What this starter does today
+
+This is still a simple first step. It does not scrape Odeon live yet.
+
+Instead, it gives you a clean structure and a small working pipeline with placeholder data so future PRs can focus on one concern at a time:
+
+- real page fetching
+- GPT extraction
+- data storage
+- APIs
+- scheduling
+
+## Suggested next PRs
+
+- Implement a real Odeon fetcher
+- Add HTML parsing for a single cinema page
+- Wire in the OpenAI API for extraction fallback
+- Save normalized listings as JSON
 
