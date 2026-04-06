@@ -2,34 +2,30 @@
 
 ## Goal
 
-CinemaFilter is being shaped as a small ingestion pipeline:
+The app provides a small local API in front of MovieGlu so you can:
 
-1. Fetch raw cinema page content
-2. Extract movie names and showtimes
-3. Normalize the data
-4. Return or store a consistent result format
+1. test sandbox credentials safely from your machine
+2. inspect response shapes through stable local endpoints
+3. normalize cinema/showtime data before using it elsewhere
 
-## Design choices in this first branch
+## Request flow
 
-- `src/cinemas/` keeps each cinema chain isolated from the others
-- `src/core/` coordinates the overall scraping workflow
-- `src/services/openai/` isolates GPT-specific logic so it does not leak into every module
-- `src/shared/` holds reusable data cleanup helpers
-- `src/config/` centralizes environment handling
+1. Flask receives a local request
+2. `cinemafilter/config.py` loads credentials from `.env`
+3. `cinemafilter/movieglu/client.py` sends a REST request to MovieGlu
+4. `cinemafilter/services/odeon.py` chooses the best Odeon cinema match
+5. `cinemafilter/normalizers.py` converts upstream data into app-friendly JSON
 
-## Why this helps future pull requests
+## Why Flask here
 
-This layout makes it easier to keep PRs small and focused:
-
-- one PR can add a new cinema adapter
-- one PR can improve prompt design
-- one PR can add storage
-- one PR can expose an API without changing scraper internals
+- easy local testing with `curl` or Postman
+- simple place to add more endpoints later
+- clean separation between your app and MovieGlu
+- useful even if you later add a frontend
 
 ## Near-term roadmap
 
-- Replace placeholder fetch logic with real HTTP requests
-- Add HTML parsing for a single Odeon page
-- Introduce tests around extraction and normalization
-- Save results to a local JSON file or lightweight database
-
+- add JSON file export
+- add more cinema routes
+- add tests around matching and normalization
+- support evaluation mode and sandbox mode with clearer output

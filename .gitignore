@@ -4,4 +4,6 @@ dist/
 .env
 .env.local
 coverage/
-
+__pycache__/
+.pytest_cache/
+.venv/
