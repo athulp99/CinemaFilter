@@ -1,0 +1,130 @@
+:root {
+  --bg: #f5efe4;
+  --panel: #fffaf2;
+  --text: #1c1917;
+  --muted: #57534e;
+  --accent: #b45309;
+  --accent-dark: #92400e;
+  --border: #e7dcc9;
+  --shadow: 0 18px 45px rgba(28, 25, 23, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top, rgba(180, 83, 9, 0.14), transparent 35%),
+    linear-gradient(180deg, #f8f3ea 0%, var(--bg) 100%);
+}
+
+.page {
+  width: min(1100px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 4rem 0 5rem;
+}
+
+.hero {
+  padding: 2rem 0 1rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.78rem;
+  color: var(--accent-dark);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2.8rem, 8vw, 5.4rem);
+  line-height: 0.95;
+}
+
+.intro {
+  max-width: 42rem;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-top: 1.75rem;
+}
+
+.button {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.85rem 1.25rem;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 160ms ease, background-color 160ms ease, color 160ms ease;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fffaf2;
+}
+
+.secondary {
+  background: transparent;
+  color: var(--text);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.card {
+  background: rgba(255, 250, 242, 0.8);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+}
+
+.card h2 {
+  margin-top: 0;
+  font-size: 1.15rem;
+}
+
+.card p,
+.status {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.status {
+  margin-top: 1.75rem;
+  font-size: 0.98rem;
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding-top: 3rem;
+  }
+
+  .intro {
+    font-size: 1rem;
+  }
+}
+
